@@ -2,7 +2,11 @@
         <!-- <div class="screen_wrapper"> -->
 
          <dv-full-screen-container>
+<<<<<<< HEAD
                 <maps :module="0"></maps>
+=======
+                <map></map>
+>>>>>>> c492a6008bacfbb11222e32a78a3d7cfcc0aa2e8
                 <div class="headers"> 
                     <dv-decoration-8 style="width: 25%;height: 60px;" />
                     <dv-decoration-5 style="width: 40%;height: 60px;margin-top: 30px;" />    
@@ -67,6 +71,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import maps from './common/map'  
 import RightBottomCmp from './scoreAnalysis/RightBottomCmp'
 import LeftMiddleCmp from './scoreAnalysis/LeftMiddleCmp'
@@ -77,6 +82,18 @@ import RightMiddleCmp from './scoreAnalysis/RightMiddleCmp'
 export default {
     components:{
         maps,RightBottomCmp,LeftMiddleCmp,RightTopCmp,LeftBottomCmp,LeftTopCmp,RightMiddleCmp
+=======
+import map from './common/map'
+import RightBottomCmp from './common/RightBottomCmp'
+import LeftMiddleCmp from './common/LeftMiddleCmp'
+import RightTopCmp from './common/RightTopCmp'
+import LeftBottomCmp from './common/LeftBottomCmp'
+import LeftTopCmp from './common/LeftTopCmp'
+import RightMiddleCmp from './common/RightMiddleCmp'
+export default {
+    components:{
+        map,RightBottomCmp,LeftMiddleCmp,RightTopCmp,LeftBottomCmp,LeftTopCmp,RightMiddleCmp
+>>>>>>> c492a6008bacfbb11222e32a78a3d7cfcc0aa2e8
     },
     data() {
         return {
