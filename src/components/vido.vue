@@ -1,7 +1,6 @@
 <template>
        <div class="playVideo">
          <div class="container" ref="container">
-            <video  ref="video" src="../../static/test.mp4" poster=""></video>
             <div class="control">
                 <el-button @click="switchBtn" class="movie">播放/暂停</el-button>
                 <div class="process" @click="processLineBtn" ref="process">

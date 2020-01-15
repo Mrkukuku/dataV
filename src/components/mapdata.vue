@@ -1,6 +1,6 @@
 <template>
          <dv-full-screen-container>
-                <Map></Map>
+                <map></map>
                 <div class="headers"> 
                     <dv-decoration-8 style="width: 25%;height: 60px;" />
                     <dv-decoration-5 style="width: 40%;height: 60px;margin-top: 30px;" />    
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Map from './common/map'
+import map from './common/map'
 import RightBottomCmp from './common/RightBottomCmp'
 import LeftMiddleCmp from './common/LeftMiddleCmp'
 import RightTopCmp from './common/RightTopCmp'
@@ -53,7 +53,7 @@ import LeftTopCmp from './common/LeftTopCmp'
 import RightMiddleCmp from './common/RightMiddleCmp'
 export default {
     components:{
-        Map,RightBottomCmp,LeftMiddleCmp,RightTopCmp,LeftBottomCmp,LeftTopCmp,RightMiddleCmp
+        map,RightBottomCmp,LeftMiddleCmp,RightTopCmp,LeftBottomCmp,LeftTopCmp,RightMiddleCmp
     },
     data() {
         return {
