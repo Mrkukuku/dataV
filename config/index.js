@@ -10,7 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        // target: 'http://192.168.1.128:8183',
+        // target: 'http://192.168.1.112:8183',
+        // target: 'http://192.168.1.31:8183',
+        target: 'http://47.99.156.10:8183',
+        pathRewrite: {
+          '^/api': '/api'
+        }
+      },
+    },
 
     // Various Dev Server settings
     host: '192.168.1.109', // can be overwritten by process.env.HOST
@@ -43,7 +53,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

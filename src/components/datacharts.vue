@@ -1,21 +1,42 @@
 <template>
     <div class="wrapper">
-        <div id="container"></div>
+        <div id="container0"></div>
         <div id="container1"></div>
         <div id="container2"></div>
-    </div>
+        <div id="container3"></div>
+         <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+        <div style="margin: 15px 0;"></div>
+            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for="city in cities" :label="city" :key="city"> </el-checkbox>
+            </el-checkbox-group>
+        <el-checkbox v-model="checked">备选项</el-checkbox>
+
+        </div>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            
+            checkAll: false,
+            checkedCities: [],
+            cities: [20,30,40,50],
+            isIndeterminate: true,
+            checked:""
         }
     },
     methods: {
+         handleCheckAllChange(val) {
+            this.checkedCities = val ? this.cities : [];
+            this.isIndeterminate = false;
+        },
+        handleCheckedCitiesChange(value) {
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.cities.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+        },
         initChart () {
-            const container = document.getElementById('container')
+            const container = document.getElementById('container0')
             this.myChart = new this.$Charts(container)
             this.myChart.setOption({
                 title: {
@@ -132,6 +153,43 @@ export default {
                 ]
             })
         },
+         initChart3 () {
+            const container3 = document.getElementById('container3')
+            this.myChart3 = new this.$Charts(container3)
+            this.myChart3.setOption({
+                series: [
+                    {
+                    type: 'gauge',
+                    startAngle: -Math.PI / 2,
+                    endAngle: Math.PI * 1.5,
+                    arcLineWidth: 25,
+                    data: [
+                        { name: 'itemA', value: 65, gradient: ['#03c2fd', '#1ed3e5', '#2fded6'] }
+                    ],
+                    axisLabel: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    pointer: {
+                        show: false
+                    },
+                    dataItemStyle: {
+                        lineCap: 'round'
+                    },
+                    details: {
+                        show: true,
+                        formatter: `{value}/2000`,
+                        style: {
+                            fill: '#1ed3e5',
+                            fontSize: 35
+                        }
+                    }
+                    }
+                ]
+            })
+         },
         resize () {
             var that = this
              window.onresize = function(){
@@ -145,19 +203,21 @@ export default {
         this.initChart()
         this.initChart1()
         this.initChart2()
-        this.resize()
+        this.initChart3()
+        // this.resize()
     },
     
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .wrapper {
         height: 100%;
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
     }
-    #container,#container1,#container2{
+    #container0,#container1,#container2,#container3{
         width: 30%;
         height: 40%;
     }
