@@ -22,6 +22,7 @@
 
 <script>
 export default {
+    props:["move"],
     data() {
         return {
             deviceAlarmlistFlag:false,//设备历史报警开关
@@ -62,6 +63,9 @@ export default {
         removeDot () {//隐藏cad及删除节点
            this.cadFlag = false
            this.device_info = false
+        //    if ( this.move ) {
+        //         this.move() 
+        //     }
            var div = document.getElementById('cadimg')
            for ( var i=div.childNodes.length-1;i>=0;i-- ){ 
                 if( div.childNodes[i].className == 'dotbox'){
@@ -70,7 +74,7 @@ export default {
             }
         },
         handerclose () {//关闭报警框
-            this.cadFlag = false 
+            this.cadFlag = false
             var div = document.getElementById('cadimg')
             for ( var i=div.childNodes.length-1;i>=0;i-- ){ 
                    if( div.childNodes[i].className == 'dotbox'){

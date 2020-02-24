@@ -7,8 +7,18 @@
                     <dv-decoration-8 style="width: 25%;height: 60px;" />
                     <dv-decoration-5 style="width: 40%;height: 60px;margin-top: 30px;" />    
                     <dv-decoration-8 :reverse="true" style="width: 25%;height: 60px;" />
-                    <div class="title">绍兴市应急大数据可视化平台</div>
+                    <div class="title">绍兴市应急作战指挥平台</div>
             </div>
+             <div class="btn" @click="exit(2)">
+                <dv-border-box-6>
+                    区域安全统计
+                </dv-border-box-6>
+            </div>
+            <!-- <div class="btn area" @click="move">
+                <dv-border-box-6>
+                    轨迹回放
+                </dv-border-box-6>
+            </div> -->
 
             <div class="chart_lefts">
                
@@ -19,14 +29,14 @@
                 </div>
                 <transition-group enter-active-class="animated zoomInDown"  tag="ul" style="overflow: hidden;flex: 1;">
                     <div class="fire_station" v-if="flag" :key="3">
-                        <div class="title" @click="change([120.582474,29.996887])" :key="1">
+                        <div class="title" @click="change([116.484648,39.999861])" :key="1">
                             消防站
                         </div>
                         <div class="content" :key="2">
                             <div class="list" v-for="(item, index) in fireStation" :key="index+3">
                                 <div class="name" >
-                                    <div class="index"  >{{index+1}}</div>  
-                                    <span class="names" > {{item.site}} </span> 
+                                    <div class="index">{{index+1}}</div>  
+                                    <span class="names"> {{item.site}} </span> 
                                 </div>
                                 <div class="address" >
                                     <div class="img" >
@@ -74,7 +84,12 @@
                         </dv-border-box-8>
                 </div>
             </transition-group>
-
+            <div class="speed" v-if="carFlag">
+                <dv-border-box-8>
+                  <div class="car">  <span class="dot"></span> 车辆一耗时: <span v-show="!flag0">{{time3}}分</span>{{time1}}秒 </div>
+                   <div class="car">  <span class="dot dot_right"></span> 车辆二耗时:<span v-show="!flag1">{{time4}}分</span>{{time2}}秒 </div>
+                </dv-border-box-8>
+            </div>
             <div class="bottom_alarm">
                     <div class="bottom_left">
                             <div class="bottom_content">
@@ -87,9 +102,8 @@
                             <span>{{time}}</span> 
                     </div>
             </div>
-
             <!-- <transition enter-active-class="animated zoomInDown"> -->
-                <waringPopout ref="cads"></waringPopout>
+                <waringPopout ref="cads" :move="move"></waringPopout>
             <!-- </transition> -->
 
         </dv-full-screen-container>
@@ -111,61 +125,198 @@ export default {
   },
   data() {
     return {
-      dotArr:[],
-      time:"",//时间
-      flag:false,
-      fireStation:[//消防站
-          {
-              site:"绍兴市上虞区煌家公馆娱乐会所",
-              address:"上虞市百官街道王充路538-552号",
-              distance:3
-          },
-          {
-              site:"上虞市金科时代潮城商贸有限公司",
-              address:"上虞区市民大道621号",
-              distance:5
-          },
-          {
-              site:"上虞颖泰精细化工有限公司",
-              address:"浙江省上虞区经济开发区纬九路9号",
-              distance:9
-          },
-          {
-              site:"永农生物科学有限公司",
-              address:"杭州湾工业园纬七东路3号",
-              distance:13
-          },
-          {
-              site:"浙江安诺芳胺化学品有限公司",
-              address:"浙江省绍兴市上虞区杭州湾经济开发区纬三路15号",
-              distance:14
-          },
-          {
-              site:"上虞宾馆有限公司",
-              address:"上虞区百官街道新河路2号",
-              distance:17
-          },
-      ]
+        dotArr:[],
+        time:"",//时间
+        flag:false,
+        fireStation:[//消防站
+            {
+                site:"绍兴市上虞区煌家公馆娱乐会所",
+                address:"上虞市百官街道王充路538-552号",
+                distance:3
+            },
+            {
+                site:"上虞市金科时代潮城商贸有限公司",
+                address:"上虞区市民大道621号",
+                distance:5
+            },
+            {
+                site:"上虞颖泰精细化工有限公司",
+                address:"浙江省上虞区经济开发区纬九路9号",
+                distance:9
+            },
+            {
+                site:"永农生物科学有限公司",
+                address:"杭州湾工业园纬七东路3号",
+                distance:13
+            },
+            {
+                site:"浙江安诺芳胺化学品有限公司",
+                address:"浙江省绍兴市上虞区杭州湾经济开发区纬三路15号",
+                distance:14
+            },
+            {
+                site:"上虞宾馆有限公司",
+                address:"上虞区百官街道新河路2号",
+                distance:17
+            },
+        ],
+        lineArr:[[116.478935,39.977761],[116.478939,39.977825],[116.478912,39.978549],[116.478912,39.978549],[116.478978,39.978555],[116.478978,39.978555],[116.479282,39.97856],[116.479658,39.978528],[116.480151,39.978453],[116.480784,39.978302],[116.480784,39.978302],[116.481149,39.978184],[116.481573,39.977977],[116.481863,39.977846],[116.482072,39.977718],[116.482362,39.977718],[116.483633,39.978935],[116.48367,39.978968],[116.484648,39.999861]],
+        lineArr1:[[116.478935,39.987761],[116.478939,39.987825],[116.478912,39.988549],[116.478912,39.988549],[116.478988,39.988555],[116.478988,39.988555],[116.479282,39.98856],[116.479658,39.988528],[116.480151,39.988453],[116.480784,39.988302],[116.480784,39.988302],[116.481149,39.988184],[116.481573,39.987997],[116.481863,39.987846],[116.482072,39.987718],[116.482362,39.987718],[116.483633,39.988935],[116.48367,39.988968],[116.484648,39.999861]],
+        markers:[],
+        line:[],
+        carFlag:false,
+        time1:0,
+        time2:0,
+        time3:"",
+        time4:"",
+        flag0:true,
+        flag1:true,
     }
   },
   methods: {
-      showCad () {
+       move () {
+            var map = this.$refs['maps'].map1,that = this
+            if ( this.line.length != 0 ) {
+                map.remove(that.line)
+            }
+            this.carFlag = true
+            var timer =  setInterval( () => {
+                this.time1 = this.time1 + 6
+                if ( this.time1 >=60 ) {
+                    this.time1 = 0
+                    if ( this.flag0 ) {
+                        this.time3 = 0
+                    }
+                    this.time3 = this.time3 + 1
+                    this.flag0 = false
+                }
+            },100)
+
+            var timer1 =  setInterval( () => {
+                this.time2 = this.time2 + 6
+                if ( this.time2 >=60 ) {
+                    this.time2 = 0
+                    if ( this.flag1 ) {
+                        this.time4 = 0
+                    }
+                    this.time4 = this.time4 + 1
+                    this.flag1 = false
+                }
+            },100)
+
+            setTimeout( () => {
+                clearInterval(timer)
+            },6800)
+
+            setTimeout( () => {
+                clearInterval(timer1)
+            },11100)
+
+            if (this.markers.length != 0) {
+              for (var i = 0; i < this.markers.length; i++){
+                  this.markers[i].setMap(null);
+              }
+            }
+           map.setCenter(that.lineArr[0])
+           that.marker = new AMap.Marker({
+                map: map,
+                position: that.lineArr[0],
+                icon: "https://webapi.amap.com/images/car.png",
+                offset: new AMap.Pixel(-26, -13),
+                autoRotation: true,//是否自动旋转
+                angle:-90,
+            });
+           that.marker1 = new AMap.Marker({
+                map: map,
+                position: that.lineArr[0],
+                icon: require('.././../static/img/homes.png'),
+                offset: new AMap.Pixel(-26, -13),
+            });
+           that.marker2 = new AMap.Marker({
+                map: map,
+                position: that.lineArr1[0],
+                icon: "https://webapi.amap.com/images/car.png",
+                offset: new AMap.Pixel(-26, -13),
+                autoRotation: true,//是否自动旋转
+                angle:-90,
+            });
+           that.marker3 = new AMap.Marker({
+                map: map,
+                position: that.lineArr1[0],
+                 icon: require('.././../static/img/homes.png'),
+                offset: new AMap.Pixel(-26, -13),
+            });
+
+           that.marker4 = new AMap.Marker({
+                map: map,
+                position: [116.498935,39.987761],
+                 icon: require('.././../static/img/homes.png'),
+                offset: new AMap.Pixel(-26, -13),
+            });
+            this.markers.push( this.marker)
+            this.markers.push( this.marker1)
+            this.markers.push( this.marker2)
+            this.markers.push( this.marker3)
+            this.markers.push( this.marker4)
+            // that.polyline = new AMap.Polyline({
+            //     map: map,
+            //     path: that.lineArr,
+            //     showDir:true,
+            //     strokeColor: "#28F",//线颜色
+            //     // strokeOpacity: 1,//线透明度
+            //     strokeWeight: 6,//线宽
+            //     // strokeStyle: "solid"//线样式
+            // });
+            that.passedPolyline = new AMap.Polyline({
+                map: map,
+                showDir:true,
+                strokeColor: "#28F",//线颜色
+                strokeWeight: 6,//线宽
+            });
+            that.passedPolyline1 = new AMap.Polyline({
+                map: map,
+                showDir:true,
+                strokeColor: "#28F",//线颜色
+                strokeWeight: 6,//线宽
+            });
+            this.line.push(that.passedPolyline)
+            this.line.push(that.passedPolyline1)
+            that.marker.on('moving', function (e) {
+                that.passedPolyline.setPath(e.passedPath);
+            });
+            that.marker2.on('moving', function (e) {
+                that.passedPolyline1.setPath(e.passedPath);
+            });
+            map.setFitView();
+            that.marker.moveAlong(that.lineArr, 1000);
+            that.marker2.moveAlong(that.lineArr1, 1000);
+        },
+       showCad () {
           this.$refs.cads.showcad()
-      },
-      change (lnglat) {
+       },
+       change (lnglat) {
            var map = this.$refs['maps'].map1
            var _this = this
-        //    if ( this.dotArr && this.dotArr.length >0 ) {
-        //        for (var i = 0; i < this.dotArr.length; i++){
-        //             this.dotArr[i].setMap(null);
-        //         }
-        //    }
+           if ( this.dotArr && this.dotArr.length >0 ) {
+               for (var i = 0; i < this.dotArr.length; i++){
+                    this.dotArr[i].setMap(null);
+                }
+           }
+            if ( this.line.length != 0 ) {
+                map.remove(this.line)
+            }
+          
+            if (this.markers.length != 0) {
+              for (var i = 0; i < this.markers.length; i++){
+                  this.markers[i].setMap(null);
+              }
+            }
            var index = new AMap.Marker({//创建点标记/
                 icon:icons,
                 position: lnglat,
             });
             index.setMap(map)
-            //  _this.dotArr.push(index)
+             _this.dotArr.push(index)
             map.setZoom(15)
             setTimeout ( () => {
                 map.setZoom(10)
@@ -179,8 +330,9 @@ export default {
             //     });
             // },300)
             index.on('click',showInfo)
-            showInfo()
+            // showInfo()
             function showInfo () {
+                _this.move()
                 var infoWindow = new AMap.InfoWindow({//信息窗口
                     offset: new AMap.Pixel(-88,52),
                     anchor: "top-left",
@@ -188,7 +340,7 @@ export default {
                     isCustom: true,
                     position: lnglat,                                                          
                 });
-                // _this.dotArr.push(infoWindow)
+                _this.dotArr.push(infoWindow)
                 _this.$refs['maps'].infoArr.push(infoWindow)
                 infoWindow.setMap(map);
                 var MyComponent = Vue.extend({
@@ -198,9 +350,9 @@ export default {
                                 <h3 style="font-size:16px;">鼎任科技网络有限公司</h3> <span style="cursor: pointer;font-size:12px;margin-top:5px;" @click="show">查看详情 ></span>
                             </div>
                             <div style="width:300px;padding:15px 0;text-align: left;">
-                                <p style="font-size:14px;">地址:</p>
-                                <p style="font-size:14px;margin:10px 0;">控制室电话:</p>
-                                <p style="font-size:14px;">主页负责人电话:</p>
+                                <p style="font-size:14px;">地址:浙江杭州市江干区白杨街道6号大街452号</p>
+                                <p style="font-size:14px;margin:10px 0;">控制室电话:13868095022</p>
+                                <p style="font-size:14px;">主页负责人电话:13095570045</p>
                             </div>
                         </div>
                         <div class="arrows" style="position: absolute; top: -31px; left: 100px;border-right: 10px solid transparent;border-left: 10px solid transparent;border-bottom: 30px solid rgba(10, 32, 50, .8);"></div>
@@ -232,6 +384,8 @@ export default {
         if ( type == 1 ) {
             sessionStorage.clear();
             this.$router.push('/')
+        }else if ( type == 2 ) {
+            this.$router.push('/mapdata')
         }
     },
   },
@@ -252,7 +406,6 @@ export default {
         overflow: hidden;
         white-space: nowrap;
     }
- 
     
     .headerss{
         height: 100px;
@@ -275,6 +428,25 @@ export default {
             -webkit-transform: translateX(-50%);
             transform: translateX(-50%)
         }
+    }
+    .btn{
+        width: 130px;
+        height: 50px;
+        position:absolute;
+        top: 108px;
+        left: 40%;
+        color: #FFF;
+        cursor: pointer;
+        line-height: 50px;
+        font-size: 16px;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .area{
+        left: calc( 40% + 140px);
+    }
+    .alarm_area{
+        left: calc( 40% + 280px);
     }
     .weather_alarm{
         // position: absolute;
@@ -425,7 +597,7 @@ export default {
         background-color: rgba(7, 44, 77, 0.5);
         color: #FFF;
         font-size: 22px;
-         font-weight: bolder;
+        font-weight: bolder;
         .border-box-content{
             display: flex;
             align-items: center;
@@ -444,6 +616,39 @@ export default {
             font-weight: normal;
             font-size: 17px;
         }
+    }
+    .speed{
+        height: 60px;
+        width: 530px;
+        position: absolute;
+        left: 35%;
+        bottom: 240px;
+        color: #FFF;
+        font-size: 22px;
+        font-weight: bolder;
+        .border-box-content{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .dot{
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background-color: rgba(0,203,254,1);
+            position: absolute;
+            left: 10px;
+            top: 8px;
+        }
+        .dot_right{
+            left: 10px;
+        }
+        .car{
+            position:relative;
+            flex: 1;
+            text-align: center;
+        }
+
     }
     .bottom_alarm{
         height: 80px;

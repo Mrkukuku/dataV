@@ -19,7 +19,7 @@
             allowfullscreen
           >
           </iframe>
-          <img src="../../static/img/Xitong_icon_rqjk.png" alt="" style="height:100px;width:100px;">
+          <img src="http://img.ys7.com/group22/M00/58/22/CmGxeF4dc2GALWX4AATCUmIJtWQ724.jpg" alt="" style="height:100px;width:100px;">
      
       <el-button @click="changes(0)" >切换</el-button>
       <el-button @click="changes(1)" >切换1</el-button>
@@ -51,9 +51,9 @@ export default {
           {
             type: 'application/x-mpegURL',
             // src: "http://hls01open.ys7.com/openlive/ff63f3bd02f4452bbb0c1fa233d70582.hd.m3u8"
-            src: "http://hls01open.ys7.com/openlive/ff63f3bd02f4452bbb0c1fa233d70582.m3u8"
+            // src: "http://hls01open.ys7.com/openlive/ff63f3bd02f4452bbb0c1fa233d70582.m3u8"
             // src: "http://60.191.94.121:9600/live/cameraid/1002219%240/substream/1.m3u8"
-            // src:"https://hls01open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
+            src:"https://hls01open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.m3u8"
           }
         ],
         // techOrder: ['flash',"html5"],

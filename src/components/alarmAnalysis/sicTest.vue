@@ -29,6 +29,7 @@ import { videoPlayer } from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import 'videojs-contrib-hls'
 export default {
+    props:["hide"],
     components:{
        videoPlayer
    },
@@ -64,7 +65,7 @@ export default {
     },
     methods: {
         back () {
-            this.$router.go(-1)
+        //    this.hide()
         },
         multiSscreen() {
             

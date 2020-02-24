@@ -8,8 +8,6 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -41,7 +39,12 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('static'),resolve('node_modules/webpack-dev-server/client'),resolve('node_modules/vue-awesome'),]
+        include: [resolve('src'), resolve('test'), resolve('static'),
+        resolve('node_modules/webpack-dev-server/client'),resolve('node_modules/vue-awesome'),
+        resolve('/node_modules/_element-ui@2.12.0@element-ui/src'),resolve('/node_modules/_element-ui@2.12.0@element-ui/packages'),
+        resolve('/node_modules/@jiaminghi/data-view'),resolve('@jiaminghi/charts'),
+        
+      ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

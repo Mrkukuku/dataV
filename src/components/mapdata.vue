@@ -7,47 +7,61 @@
                     <dv-decoration-8 style="width: 25%;height: 60px;" />
                     <dv-decoration-5 style="width: 40%;height: 60px;margin-top: 30px;" />    
                     <dv-decoration-8 :reverse="true" style="width: 25%;height: 60px;" />
-                    <div class="title" @click="flag=!flag">绍兴市应急大数据可视化平台</div>
+                    <div class="title" @click="flag=!flag">绍兴市应急信息化数据平台</div>
                 </div>
-                    <div class="chart_left"> 
-                        <dv-border-box-1>
-                            <div class="left_tops">
-                                 <transition enter-active-class="animated slideInLeft" mode="out-in">
-                                    <LeftTopCmp v-if="flag"></LeftTopCmp>
-                                 </transition>
-                            </div>
-                            <div class="left_middle">
-                                <transition enter-active-class="animated slideInLeft" mode="out-in">
-                                    <LeftMiddleCmp v-if="flag"></LeftMiddleCmp>
-                                </transition>
-                            </div>
-                            <div class="left_bottom">
-                                  <transition enter-active-class="animated slideInLeft" mode="out-in">
-                                    <LeftBottomCmp v-if="flag"></LeftBottomCmp>
-                                  </transition>  
-                            </div>
-                        </dv-border-box-1> 
-                    </div>
-                    <div class="chart_right"> 
-                        <dv-border-box-1>
-                            <div class="right_top">
-                                
+                <div class="btn" @click="change(1)">
+                    <dv-border-box-6 >
+                        行业数据统计
+                    </dv-border-box-6>
+                </div>
+                <div class="btn area" @click="change(2)">
+                    <dv-border-box-6>
+                        区域安全统计
+                    </dv-border-box-6>
+                </div>
+                <div class="btn alarm_area" @click="exit(2)">
+                    <dv-border-box-6>
+                        作战平台
+                    </dv-border-box-6>
+                </div>
+                <div class="chart_left"> 
+                    <dv-border-box-1>
+                        <div class="left_tops">
+                            <transition enter-active-class="animated slideInLeft" mode="out-in">
+                                <LeftTopCmp v-if="flag && changeFlag" ref="LeftTopCmp"></LeftTopCmp>
+                            </transition>
+                        </div>
+                        <div class="left_middle">
+                            <transition enter-active-class="animated slideInLeft" mode="out-in">
+                                <LeftMiddleCmp v-if="flag && changeFlag" ref="LeftMiddleCmp"></LeftMiddleCmp>
+                            </transition>
+                        </div>
+                        <div class="left_bottom">
+                            <transition enter-active-class="animated slideInLeft" mode="out-in">
+                                <LeftBottomCmp v-if="flag"></LeftBottomCmp>
+                            </transition>  
+                        </div>
+                    </dv-border-box-1> 
+                </div>
+                <div class="chart_right"> 
+                    <dv-border-box-1>
+                        <div class="right_top">
+                            <transition enter-active-class="animated slideInRight" mode="out-in">
+                                <RightTopCmp v-if="flag && changeFlag" ref="RightTopCmp"></RightTopCmp>
+                            </transition>
+                        </div>
+                        <div class="right_middle">
                                 <transition enter-active-class="animated slideInRight" mode="out-in">
-                                    <RightTopCmp v-if="flag"></RightTopCmp>
+                                <RightMiddleCmp v-if="flag && changeFlag" ref="RightMiddleCmps"></RightMiddleCmp>
                                 </transition>
-                            </div>
-                            <div class="right_middle">
-                                 <transition enter-active-class="animated slideInRight" mode="out-in">
-                                    <RightMiddleCmp v-if="flag"></RightMiddleCmp>
-                                 </transition>
-                            </div>
-                            <div class="right_bottom">
-                                 <transition enter-active-class="animated slideInRight" mode="out-in">
-                                    <RightBottomCmp v-if="flag"></RightBottomCmp>
-                                 </transition>
-                            </div>
-                        </dv-border-box-1> 
-                    </div>
+                        </div>
+                        <div class="right_bottom">
+                                <transition enter-active-class="animated slideInRight" mode="out-in">
+                                <RightBottomCmp v-if="flag"></RightBottomCmp>
+                                </transition>
+                        </div>
+                    </dv-border-box-1> 
+                </div>
 
                 <div class="bottom">
                     <div class="bottom_left">
@@ -81,10 +95,65 @@ export default {
     data() {
         return {
             time :"",
-            flag:false
+            flag:false,
+            changeFlag:true
         }
     },
     methods: {
+        change (type) {
+            if ( type == 1 ){
+                this.changeFlag = false
+                setTimeout( () => {
+                 this.$refs.LeftTopCmp.init1()
+                 this.$refs.LeftMiddleCmp.init1()
+                 this.$refs.RightTopCmp.init1()
+                 this.$refs.RightMiddleCmps.name = "行业预警指数"
+                 this.$refs.RightMiddleCmps.config = {
+                        data: [
+                            {
+                                name: '医疗',
+                                value: 1.6
+                            },
+                            {
+                                name: '体育场馆',
+                                value: 2.6
+                            },
+                            {
+                                name: '教学',
+                                value: 4.9
+                            },
+                            {
+                                name: '剧院',
+                                value: 5.6
+                            },
+                            {
+                                name: '办公商务',
+                                value: 6.6
+                            },
+                            {
+                                name: '商业',
+                                value: 7.69
+                            },
+                            {
+                                name: '综合建筑',
+                                value: 9.06
+                            },
+                            
+                        ],
+                 }
+              },600)
+            }else if ( type == 2 ) {
+                this.changeFlag = false
+                //  setTimeout( () => {
+                //     this.$refs.LeftTopCmp.init()
+                //     this.$refs.LeftMiddleCmp.init()
+                //     this.$refs.RightTopCmp.init()
+                //  },600)
+            }
+            setTimeout( () => {
+                this.changeFlag = true
+            },500)
+        },
         getTime () {
             this.time =  this.$moment( new Date() ).format("YYYY-MM-DD HH:mm:ss")
         },
@@ -102,6 +171,8 @@ export default {
             if ( type == 1 ) {
                 sessionStorage.clear();
                 this.$router.push('/')
+            }else if ( type = 2) {
+                this.$router.push('/alarmData')
             }
         },
     },
@@ -146,7 +217,25 @@ export default {
             transform: translateX(-50%)
         }
     }
-    
+    .btn{
+        width: 130px;
+        height: 50px;
+        position:absolute;
+        top: 108px;
+        left: 40%;
+        color: #FFF;
+        cursor: pointer;
+        line-height: 50px;
+        font-size: 16px;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .area{
+        left: calc( 40% + 140px);
+    }
+    .alarm_area{
+        left: calc( 40% + 280px);
+    }
     .chart_left{
         position: absolute;
         height:calc(100% - 180px);

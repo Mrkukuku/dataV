@@ -7,7 +7,7 @@
        <div class="firefighting">
            <!-- <dv-border-box-5> -->
                <div class="grade_wrapper" ref="wrapper">
-                  <dv-decoration-9 :style="{width:number,height:number}">84分</dv-decoration-9>
+                  <dv-decoration-9 :style="{width:number,height:number}">{{score}}分</dv-decoration-9>
                </div>
            <!-- </dv-border-box-5> -->
        </div>
@@ -19,7 +19,8 @@
 export default {
     data() {
         return {
-            number:""
+            number:"",
+            score:84
         }
     },
     methods: {
@@ -31,7 +32,13 @@ export default {
             window.onresize = function(){
                that.number =that.$refs.wrapper.offsetHeight + "px"
             }
-        }
+        },
+        init () {
+            this.score = 84
+        },
+        init1 () {
+            this.score = 86
+        },
     },
     mounted() {
         this.getHeigth()

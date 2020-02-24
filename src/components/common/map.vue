@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="wrapper"> -->
-        <div  id="container" tabindex="0"> </div>
+        <div  id="container" tabindex="0" > </div>
     <!-- </div> -->
 </template>
 
@@ -75,9 +75,36 @@ export default {
             })
         }else if ( this.module == 1 ) {
             this.init1()
+        }else if ( this.module == 2 ) {
+            this.init2()
         }
     },
     methods: {
+        init2 () {
+            var _this = this
+            this.map2 = new AMap.Map('container', {
+                // center: [116.397428, 39.90923],
+                resizeEnable: true,
+                zoom: 17,
+                lang: "ch"
+            });
+            this.map2.on( "click", () => {
+                if (_this.infoArr.length != 0) {
+                    for (var i = 0; i < _this.infoArr.length; i++){
+                        _this.infoArr[i].setMap(null);
+                    }
+                }
+            })
+            this.map2.setMapStyle("amap://styles/darkblue");
+            //         AMap.plugin('AMap.Weather', function() {
+            //     //创建天气查询实例
+            //     var weather = new AMap.Weather();
+            //     //执行实时天气信息查询
+            //     weather.getForecast('江干区', function(err, data) {
+            //         console.log(data);
+            //     });
+            // });
+        },
         init1 () {
             var _this = this
             this.map1 = new AMap.Map('container', {
@@ -93,6 +120,11 @@ export default {
                     }
                 }
             })
+            if (_this.infoArr.length != 0) {
+                    for (var i = 0; i < _this.infoArr.length; i++){
+                        _this.infoArr[i].setMap(null);
+                    }
+                }
            this.map1.setMapStyle("amap://styles/darkblue");
         },
         init () {
@@ -119,6 +151,7 @@ export default {
                     position: [marker.longitude, marker.latitude],
                 });
                 index.on('click',showInfo)
+                // _this.infoArr.push( index )
                 // AMap.event.addListener(index, 'click', function() {
                 // console.log("1111");
                 // });

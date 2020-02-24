@@ -1,7 +1,7 @@
 <template>
    <div class="tops">
          <div class="table-name">
-            <div style="float: right;"> 单位预警指数 </div> 
+            <div style="float: right;"> {{name}} </div> 
             <dv-decoration-2  dur=1 style="width:100%;height:5px;" />
         </div>
        <div class="firefighting">
@@ -14,6 +14,7 @@
 export default {
     data() {
         return {
+            name:"单位预警指数",
             config:{
                 data: [
                     {
@@ -46,7 +47,81 @@ export default {
                     },
                     
                 ],
-            }
+            },
+            methods: {
+                init () {
+                    this.name = "单位预警指数"
+                    this.config = {
+                        data: [
+                            {
+                                name: '越都社区',
+                                value: 1
+                            },
+                            {
+                                name: '绍兴金帝银泰城',
+                                value: 2.6
+                            },
+                            {
+                                name: '（柯桥区）国贸大厦',
+                                value: 3.9
+                            },
+                            {
+                                name: '（柯桥区）银泰百货',
+                                value: 4.6
+                            },
+                            {
+                                name: '(柯桥区) 金汇大厦 ',
+                                value: 5.6
+                            },
+                            {
+                                name: '（衢州市）吾悦华府',
+                                value: 8.69
+                            },
+                            {
+                                name: '柯桥银泰百货',
+                                value: 9.06
+                            },
+                            
+                        ],
+                    }
+                },
+                init1 () {
+                    this.name = "行业预警指数"
+                    this.config = {
+                        data: [
+                            {
+                                name: '医疗',
+                                value: 1.6
+                            },
+                            {
+                                name: '体育场馆',
+                                value: 2.6
+                            },
+                            {
+                                name: '教学',
+                                value: 4.9
+                            },
+                            {
+                                name: '剧院',
+                                value: 5.6
+                            },
+                            {
+                                name: '办公商务',
+                                value: 6.6
+                            },
+                            {
+                                name: '商业',
+                                value: 7.69
+                            },
+                            {
+                                name: '综合建筑',
+                                value: 9.06
+                            },
+                            
+                        ],
+                    }
+                }
+            },
         }
     },
 }

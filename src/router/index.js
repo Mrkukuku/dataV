@@ -18,9 +18,7 @@ export const constantRoutes =[
     path:"/menu",
     component: () => import('@/components/menu.vue'),
     name:"menu",
-    meta:{
-      title:"登录"
-    }
+    hidden:true,
   },
   {
       path: '/mapdata',
@@ -46,6 +44,11 @@ export const constantRoutes =[
     path:'/sic',
     name:"视频测试",
     component: () => import('@/components/alarmAnalysis/sicTest.vue')
+  },
+  {
+    path:'/locus',
+    name:"轨迹回放",
+    component: () => import('@/components/locus.vue')
   },
   {
       path: '/404',
