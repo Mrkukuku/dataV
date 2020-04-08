@@ -15,6 +15,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import "./assets/css/reset.css"
 import "babel-polyfill"
 import promise from 'es6-promise'
+import * as filters from './utils/validate'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 promise.polyfill();
 Vue.use(ElementUI)
 Vue.use(dataV)

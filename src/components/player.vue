@@ -23,6 +23,10 @@
      
       <el-button @click="changes(0)" >切换</el-button>
       <el-button @click="changes(1)" >切换1</el-button>
+      <div>
+          {{time|timeFormat}}
+          {{time1|timeFormat}}
+      </div>
     </div>
 </template>
 
@@ -75,7 +79,9 @@ export default {
             progressControl: false, // 进度条
             fullscreenToggle: true // 全屏按钮
         },
-      }
+      },
+      time:"2020-03-31T13:58:17.000+0800",
+      time1:null,
     }
   },
   methods: {
