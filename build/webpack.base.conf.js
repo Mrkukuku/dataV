@@ -11,7 +11,8 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: ["babel-polyfill",'./src/main.js']
+    app: ["babel-polyfill",'./src/main.js'],
+    // app: ["babel-polyfill",'./src/main.js'],
   },
   output: {
     path: config.build.assetsRoot,
@@ -41,7 +42,7 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('static'),
         resolve('node_modules/webpack-dev-server/client'),resolve('node_modules/vue-awesome'),
-        resolve('/node_modules/_element-ui@2.12.0@element-ui/src'),resolve('/node_modules/_element-ui@2.12.0@element-ui/packages'),
+        // resolve('/node_modules/_element-ui@2.12.0@element-ui/src'),resolve('/node_modules/_element-ui@2.12.0@element-ui/packages'),
         resolve('/node_modules/@jiaminghi/data-view'),resolve('@jiaminghi/charts'),
         
       ]

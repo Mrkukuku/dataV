@@ -1,7 +1,7 @@
 <template>
     <div class="locus">
         <maps :module="2" ref="maps"></maps>
-        <el-button @click="change" class="btn">  </el-button>
+        <el-button @click="change" class="btn"> 轨迹回放 </el-button>
         <div class="waring_info" v-show="flag">
             <sic ref="sics" :hide = "hide"></sic>
         </div>

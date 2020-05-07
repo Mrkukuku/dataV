@@ -16,7 +16,7 @@ import "./assets/css/reset.css"
 import "babel-polyfill"
 import promise from 'es6-promise'
 import * as filters from './utils/validate'
-Object.keys(filters).forEach(key => {
+Object.keys(filters).forEach(key => {//注册全局过滤器
   Vue.filter(key, filters[key])
 })
 promise.polyfill();
@@ -27,7 +27,7 @@ Vue.config.productionTip = false
 Vue.prototype.$Charts = Charts
 Vue.prototype.$moment = moment
 Vue.prototype.axios = axios
-// axios.defaults.baseURL = "http://47.99.156.10:8183"
+axios.defaults.baseURL = "http://47.99.156.10:8183"
 axios.interceptors.request.use(
   config => {
     if (config.url === '/' || config.url == "https://free-api.heweather.net/s6/weather/now") {

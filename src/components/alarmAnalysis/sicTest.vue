@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         back () {
-        //    this.hide()
+           this.hide()
         },
         multiSscreen() {
             

@@ -51,6 +51,11 @@ export const constantRoutes =[
     component: () => import('@/components/locus.vue')
   },
   {
+    path:'/table',
+    name:"表格",
+    component: () => import('@/components/tableTest.vue')
+  },
+  {
       path: '/404',
       component: () => import('@/components/errorPage'),
       hidden: true

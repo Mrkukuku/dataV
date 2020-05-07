@@ -71,6 +71,12 @@ export default {
                 this.markers = res.data.data
                 // console.log( this.markers )
                 // this.center = [this.markers[0].longitude,this.markers[0].latitude]
+                 this.map = new AMap.Map('container', {
+                    center:this.center,
+                    resizeEnable: true,
+                    zoom: 16,
+                    lang: "ch"
+                });
                 this.init()
             })
         }else if ( this.module == 1 ) {
@@ -129,12 +135,6 @@ export default {
         },
         init () {
             var _this = this
-            this.map = new AMap.Map('container', {
-                center:_this.center,
-                resizeEnable: true,
-                zoom: 16,
-                lang: "ch"
-            });
             this.map.on( "click", () => {
                 if (_this.infoArr.length != 0) {
                     for (var i = 0; i < _this.infoArr.length; i++){
