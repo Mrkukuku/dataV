@@ -147,7 +147,7 @@
         }, // 操作按钮组
         pagination: {
           pageIndex: 1,
-          pageSize: 20
+          pageSize: 10
         }, // 分页参数
         options: {
           stripe: true, // 是否为斑马纹 table

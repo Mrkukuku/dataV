@@ -3,7 +3,7 @@
         <div class="map">
             <div style="height:100%;width:100%;outline: none!important;" id="container" tabindex="0"> </div>
         </div>
-        <el-button type="primary" @click="change" style="float:left">切换</el-button>
+        <el-button type="primary" @click="changeDatas" style="position: absolute;;right:0;top:0">返回</el-button>
     </div>
 </template>
 
@@ -13,14 +13,14 @@ import AMap from "AMap";
 export default {
     data() {
         return {
-            adCode: 330800, // 衢州市code
-            // adCode: 420100, // 武汉市code
+            // adCode: 330800, // 衢州
+            adCode: 330600, // 绍兴
             disProvince: null, // 区域图层
             depth: 2, // 区域等级 0省级 1市级 2区县级
             colors: {}, // 区域颜色
             heatmap: null, // 热力图
-            // city: '武汉市',
-            city: '衢州市',
+            city: '绍兴市',
+            // city: '衢州市',
         }   
     },
     methods: {
@@ -55,27 +55,53 @@ export default {
     initMap() {// 创建地图
       var that = this
       this.map = new AMap.Map('container', {
-        zoom:9,
-        zooms: [9,12],
-        center:[118.87263,28.941708],
+        zoom:10,
+        zooms: [10,12],
+        // center:[118.87207,28.943265],
+        center:[120.580444,29.859701],
         resizeEnable: true,
         showIndoorMap: false,
-        mapStyle:"amap://styles/darkblue",
-        features:['point'],
+        mapStyle:"amap://styles/0206dfbcbabc11e4971c1a2e6bcdda2e",
+        // mapStyle:"amap://styles/darkblue",
+        features:['point',],//地图要素
         viewMode:"2D",
-        pitch:45
-        // zoomEnable:false,
+        pitch:65,
+        zoomEnable:false,
         // dragEnable: false,
       })
-      this.map.on( "hotspotclick", (data) => {
-          console.log(data)
+      AMap.plugin('AMap.Geocoder', function() {
+        that.geocoder = new AMap.Geocoder({
+        })
       })
-      AMap.plugin('AMap.DistrictSearch', function () {//区域遮盖
+      this.map.on( "hotspotclick", (data) => {
+        var lnglat = [data.lnglat.lng,data.lnglat.lat]
+        this.map.setCenter(lnglat)
+        this.map.setStatus({
+            zoomEnable: true,
+            });
+        this.map.setZoom(11)
+        // this.map.setStatus({
+        //     zoomEnable: false,
+        //     });
+        // console.log(data)
+        that.geocoder.getAddress(lnglat, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                that.changeData(result.regeocode.addressComponent.district)
+            }
+        })
+      })
+    },
+    init1 (city) {
+        var that =this
+        if( that.polygon ) {
+            that.map.remove(that.polygon)
+        }
+        AMap.plugin('AMap.DistrictSearch', function () {//区域遮盖
 
             new AMap.DistrictSearch({
                 extensions: 'all',
                 subdistrict: 0
-            }).search(that.city, function(status, result) {// 外多边形坐标数组和内多边形坐标数组
+            }).search(city, function(status, result) {// 外多边形坐标数组和内多边形坐标数组
                 var outer = [
                 new AMap.LngLat(-360, 90, true),
                 new AMap.LngLat(-360, -90, true),
@@ -85,26 +111,24 @@ export default {
                 var holes = result.districtList[0].boundaries
                 var pathArray = [outer]
                 pathArray.push.apply(pathArray, holes)
-                var polygon = new AMap.Polygon({
+                that.polygon = new AMap.Polygon({
                     pathL: pathArray,
                     strokeColor: '#FCF9F2',
                     strokeWeight: 1,
                     fillColor: 'rgba( 0 , 0, 1, 1)', // 遮罩背景色
                     fillOpacity: 1
                 })
-                polygon.setPath(pathArray)
-                that.map.add(polygon)
+                that.polygon.setPath(pathArray)
+                that.map.add(that.polygon)
             })
         })
-      
     },
-   
-    initPro(code, dep) { // 创建区域图层
+    initPro(code, dep) {//创建区域图层
         let that = this
         // this.disProvince && disProvince.setMap(null)
        AMap.plugin('AMap.DistrictLayer', function () {
        that.disProvince = new AMap.DistrictLayer.Province({
-            zIndex: 12,
+            zIndex: 13,
             adcode: [code],
             // NAME_CHN:that.city,
             depth: dep,
@@ -156,7 +180,7 @@ export default {
         this.map.plugin(['AMap.Heatmap'], function() {
             // 初始化heatmap对象
             that.heatmap = new AMap.Heatmap(that.map, {
-                radius: 12, // 给定半径
+                radius: 25, // 给定半径
                 opacity: [0, 0.8],
                 gradient:{
                     0.2:'#03549B',
@@ -210,14 +234,24 @@ export default {
     },
     getData() {
         this.initMap()
+        this.init1(this.city)
         this.initPro(this.adCode, this.depth)
-        this.lockMapBounds()
+        // this.lockMapBounds()
         this.drwaHeatmap()
+    },
+    changeData(city,adcode) {
+        this.init1(city)
+        // this.initPro(this.adCode, 2)
+    },
+    changeDatas() {
+       this.init1(this.city)
+       this.map.setCenter([120.580444,29.859701])
+        this.map.setZoom(10)
     },
 
 },
     mounted() {
-    this.getData()
+        this.getData()
 },
 
 }
@@ -233,7 +267,7 @@ export default {
         // background-color: #000001
         .map{
             height: 100%;
-            width: 50%;
+            width: 100%;
             float: left;
         }
     }

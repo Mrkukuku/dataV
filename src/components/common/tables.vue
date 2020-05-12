@@ -22,14 +22,27 @@
                 <template slot="header" slot-scope="scope">
                   {{column.label}} 
                     <template v-if="column.select">
-                       <el-select v-model="column.value" placeholder="请选择" @change="column.method">
+                       <!-- <el-select v-model="column.value" placeholder="请选择" @change="column.method">
                             <el-option
                               v-for="item in column.ProcessingStatus"
                               :key="item.id"
                               :label="item.label"
                               :value="item.id">
                             </el-option>
-                          </el-select>
+                          </el-select> -->
+                          <el-dropdown @command="column.method">
+                          <span class="el-dropdown-link">
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                          </span>
+                          <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item 
+                             v-for="item in column.ProcessingStatus"
+                              :key="item.id"
+                              :command="item.label"
+                            >{{item.label}}</el-dropdown-item>
+                            
+                          </el-dropdown-menu>
+                        </el-dropdown>
                     </template>
                 </template>
           <template slot-scope="scope">
@@ -144,7 +157,7 @@
     },
     created () {},
     mounted () {
-      if (this.pagination && !this.pagination.pageSizes) {
+      if (this.pagination && !this.pagination.pageSize) {
         this.pagination.pageArray = _pageArray // 每页展示条数控制
       }
       this.tableCurrentPagination = this.pagination || {
