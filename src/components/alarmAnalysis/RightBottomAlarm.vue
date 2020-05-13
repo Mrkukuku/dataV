@@ -67,7 +67,7 @@ export default {
             },
             axisLine: {
               style: {
-                stroke: '#999'
+                stroke: '#999',
               }
             },
             axisLabel: {

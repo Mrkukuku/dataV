@@ -95,11 +95,11 @@ export default {
   },
   methods: {
     getDate () {
-    var now = new Date();
-    var month = now.getMonth()+1
-    var day = now.getDate()
-    console.log(month,day)
-  },
+      var now = new Date();
+      var month = now.getMonth()+1
+      var day = now.getDate()
+      console.log(month,day)
+    },
   },
   mounted() {
     // this.getDate()
