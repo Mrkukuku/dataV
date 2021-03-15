@@ -105,7 +105,7 @@ export default {
                 }else{
                     sessionStorage.setItem('mapFlag',0);
                 }
-                this.$router.push('/mapdata')
+                this.$router.push('/menu')
             })
         }
     },

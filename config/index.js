@@ -14,8 +14,9 @@ module.exports = {
       '/api': {
         // target: 'http://192.168.1.128:8183',
         // target: 'http://192.168.1.112:8183',
-        // target: 'http://192.168.1.31:8183',
-        target: 'http://47.99.156.10:8183',
+        target: 'http://192.168.1.145:8183',
+        // target: 'http://47.99.156.10:8183',
+        // target: 'http://192.168.1.112:8183',
         pathRewrite: {
           '^/api': '/api'
         }

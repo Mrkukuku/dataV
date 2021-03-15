@@ -77,7 +77,7 @@ input{
     /* //去掉高德的版本号 */
 }
 /* 选择器样式 */
-.el-select-dropdown{
+/* .el-select-dropdown{
     border: none;
     background: #364751;
     color: #ffffff;
@@ -106,9 +106,9 @@ input{
 }
 .el-popper[x-placement^=bottom] .popper__arrow{
     border-bottom-color: #364751;
-}
+} */
 /* 下拉菜单 */
-.el-dropdown-menu{
+/* .el-dropdown-menu{
     background: #364751;
     border: none;
 }
@@ -118,4 +118,4 @@ input{
 .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover{
     background: #364751;
     color: #ffffff;
-}
+} */

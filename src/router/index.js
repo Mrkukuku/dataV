@@ -11,7 +11,7 @@ Vue.use(Router)
 export const constantRoutes =[
   {
     path: '/',
-    redirect:'/login',
+    redirect:'/table',
     hidden:true,
   },
   {
@@ -56,6 +56,23 @@ export const constantRoutes =[
     component: () => import('@/components/tableTest.vue')
   },
   {
+    path:"/player",
+    name:"play",
+    component: menu,
+    redirect:"/player/index",
+    children:[
+      {
+        path:"index",
+        component: () => import('@/components/player.vue'),
+        meta:{
+          title:"视频监控",
+          roles:["edit"]
+        },
+      }
+    ],
+   
+  },
+  {
       path: '/404',
       component: () => import('@/components/errorPage'),
       hidden: true
@@ -80,23 +97,7 @@ export const asyncRoutes = [
         }
       ]
     },
-    {
-      path:"/player",
-      name:"play",
-      component: menu,
-      redirect:"/player/index",
-      children:[
-        {
-          path:"index",
-          component: () => import('@/components/player.vue'),
-          meta:{
-            title:"视频监控",
-            roles:["edit"]
-          },
-        }
-      ],
-     
-    },
+   
     { path: '*', redirect: '/404', hidden: true }
 ]
 

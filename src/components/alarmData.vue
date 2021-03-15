@@ -29,7 +29,7 @@
                 </div>
                 <transition-group enter-active-class="animated zoomInDown"  tag="ul" style="overflow: hidden;flex: 1;">
                     <div class="fire_station" v-if="flag" :key="3">
-                        <div class="title" @click="change([116.484648,39.999861])" :key="1">
+                        <div class="title" @click="drive" :key="1">
                             消防站
                         </div>
                         <div class="content" :key="2">
@@ -174,6 +174,22 @@ export default {
     }
   },
   methods: {
+      drive(){
+          var map = this.$refs['maps'].map1
+          var driving = new AMap.Driving({
+                map: map,
+                panel: "panel"
+            }); 
+            // 根据起终点经纬度规划驾车导航路线
+            driving.search(new AMap.LngLat(116.379028, 39.865042), new AMap.LngLat(116.427281, 39.903719), function(status, result) {
+                // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                if (status === 'complete') {
+                    log.success('绘制驾车路线完成')
+                } else {
+                    log.error('获取驾车数据失败：' + result)
+                }
+            });
+      },    
        move () {
             var map = this.$refs['maps'].map1,that = this
             if ( this.line.length != 0 ) {
@@ -390,7 +406,7 @@ export default {
     },
   },
   mounted() {
-      this.getTimeLoop()
+    //   this.getTimeLoop()
       this.showTransition()
   },
   destroyed() {

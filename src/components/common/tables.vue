@@ -1,12 +1,11 @@
 <!--region 封装的分页 table-->
-<!--region 封装的分页 table-->
 <template>
   <div class="table">
     <el-table 
     id="iTable" 
     v-loading.iTable="options.loading" 
     :data="list" 
-    max-height="100%" 
+    height="90%" 
     :stripe="options.stripe"
     ref="mutipleTable"
     @selection-change="handleSelectionChange">
@@ -21,29 +20,6 @@
                          :width="column.width">
                 <template slot="header" slot-scope="scope">
                   {{column.label}} 
-                    <template v-if="column.select">
-                       <!-- <el-select v-model="column.value" placeholder="请选择" @change="column.method">
-                            <el-option
-                              v-for="item in column.ProcessingStatus"
-                              :key="item.id"
-                              :label="item.label"
-                              :value="item.id">
-                            </el-option>
-                          </el-select> -->
-                          <el-dropdown @command="column.method">
-                          <span class="el-dropdown-link">
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                          </span>
-                          <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item 
-                             v-for="item in column.ProcessingStatus"
-                              :key="item.id"
-                              :command="item.label"
-                            >{{item.label}}</el-dropdown-item>
-                            
-                          </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
                 </template>
           <template slot-scope="scope">
             <template v-if="!column.render">
@@ -62,7 +38,7 @@
       </template>
       <!--endregion-->
       <!--region 按钮操作组-->
-      <el-table-column ref="fixedColumn" label="操作" align="center" :width="operates.width" :fixed="operates.fixed" v-if="operates.list.length > 0">
+      <el-table-column ref="fixedColumn" label="操作" align="center" :width="operates.width"  v-if="operates.list.length > 0">
         <template slot-scope="scope">
           <div class="operate-group">
               <div v-for="(btn, key) in operates.list" class="item" v-if="btn.show">
@@ -70,20 +46,21 @@
                            :plain="btn.plain" @click.native.prevent="btn.method(key,scope.row)">
                            {{ btn.label }}
                 </el-button>
+                
               </div>
           </div>
         </template>
       </el-table-column>
       <!--endregion-->
     </el-table>
-    <div style="height:12px"></div>
     <!--region 分页-->
     <el-pagination v-if="pagination" @size-change="handleSizeChange"
-                   @current-change="handleIndexChange"
-                   :page-size="tableCurrentPagination.pageSize"
-                   :page-sizes="this.tableCurrentPagination.pageArray" :current-page="tableCurrentPagination.pageIndex"
-                   layout="total,sizes, prev, pager, next,jumper"
-                   :total="total"></el-pagination>
+      @current-change="handleIndexChange"
+      :page-size="tableCurrentPagination.pageSize"
+      :page-sizes="this.tableCurrentPagination.pageArray" :current-page="tableCurrentPagination.pageIndex"
+      layout="total,sizes, prev, pager, next,jumper"
+      :total="total">
+    </el-pagination>
     <!--endregion-->
   </div>
 </template>
@@ -210,9 +187,10 @@
 <style lang="scss" rel="stylesheet/less">
   .table {
     height: 100%;
+    width: 100%;
     .el-pagination {
       float: right;
-      margin: 20px;
+      margin-top: 12px;
     }
     .el-table__header-wrapper, .el-table__fixed-header-wrapper {
       thead {
@@ -239,7 +217,7 @@
         margin-top: 4px;
         margin-bottom: 4px;
         display: block;
-        flex: 0 0 50%;
+        flex: 1;
       }
     }
     .filter-data {

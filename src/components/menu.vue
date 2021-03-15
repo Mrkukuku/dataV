@@ -12,12 +12,12 @@
                 </el-submenu>
             </el-menu>
             <div class="wrapper_right">
-                <div class="head">
+                <!-- <div class="head">
                     <el-radio-group v-model="isCollapse">
                         <el-radio-button :label="false" v-show="isCollapse">展开</el-radio-button>
                         <el-radio-button :label="true" v-show="!isCollapse">收起</el-radio-button>
                     </el-radio-group>
-                </div>
+                </div> -->
                <transition name="fade-transform" mode="out-in">
                     <router-view/>
                 </transition>
